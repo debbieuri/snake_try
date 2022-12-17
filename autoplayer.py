@@ -40,7 +40,8 @@ if s==[]:
     brkeajfnc
 pp.moveTo(s[0],s[1])
 pp.click()
-b=[[0 for _ in range(size[1])] for _ in range(size[0])]
+#ways=[[0,-1],[1,0],[0,1],[-1,0]]
+b=[[0 for _ in range(size[1])]for _ in range(size[0])]
 for x in range(size[0]):
     for y in range(size[1]):
         a=z.getpixel((s[0]+x*ss,s[1]+y*ss))
@@ -49,7 +50,6 @@ for x in range(size[0]):
         if a==(255,0,0):
             b[x][y]=2
 pp.press('down')
-d=[0,1]
 while True:
     z=pp.screenshot(region=(s[0],s[1],s[0]+ss*size[0],s[1]+ss*size[1]))
     g=[[0 for _ in range(size[1])] for _ in range(size[0])]
@@ -70,14 +70,22 @@ while True:
                 f=[x,y]
     if h!=[]:
         b=[[i for i in ii] for ii in g]
-        print(h)
-        if f[0]<h[0]:
-            pp.press('left')
-        if f[0]>h[0]:
-            pp.press('right')
-        if f[1]<h[1]:
+        if h[1]==0:
+            if h[0]==0:
+                pp.press('down')
+            else:
+                pp.press('left')
+        elif h[0]==size[0]-1:
             pp.press('up')
-        if f[1]>h[1]:
+        elif h[1]==size[1]-1:
+            if h[0]&1:
+                pp.press('up')
+            else:
+                pp.press('right')
+        elif h[1]==1:
+            if h[0]&1:
+                pp.press('right')
+            else:
+                pp.press('down')
+        elif h[0]==0:
             pp.press('down')
-    else:
-        print('aaaa')
